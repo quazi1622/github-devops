@@ -1,0 +1,24 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    # This tells GitHub to look for YOUR runner, not their cloud computers
+    runs-on: self-hosted
+    
+    steps:
+      # Step 1: Download the code from the repo to the _work folder on the droplet
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      # Step 2: Move the file to where Nginx looks for websites
+      - name: Deploy to Nginx
+        run: |
+          # Copy index.html to the web server directory
+          cp index.html /var/www/html/index.html
+          
+          # Optional: Print a success message
+          echo "Successfully deployed index.html to /var/www/html"
