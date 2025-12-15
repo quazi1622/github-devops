@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Habits Survey</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #27ae60;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --input-bg: #fff;
+            --border-color: #ddd;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .form-group:hover {
+            background-color: #fafafa;
+            border-color: #eee;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Input Styles */
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: var(--input-bg);
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+        }
+
+        /* Radio & Checkbox styling wrapper */
+        .options-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            transform: scale(1.2);
+            accent-color: var(--accent-color);
+        }
+
+        /* Range Slider */
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+            accent-color: var(--accent-color);
+        }
+
+        .range-value {
+            font-weight: bold;
+            color: var(--accent-color);
+            float: right;
+        }
+
+        /* Button */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #219150;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Success Message */
+        #successMessage {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        #successMessage h2 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="successMessage">
+            <h2>Thank You!</h2>
+            <p>Your responses have been recorded successfully.</p>
+            <p>We appreciate your time.</p>
+            <button class="submit-btn" onclick="location.reload()" style="margin-top: 30px;">Take Survey Again</button>
+        </div>
+
+        <form id="foodSurveyForm">
+            <header>
+                <h1>Culinary Lifestyle Survey</h1>
+                <p>Help us understand your eating habits and preferences. This survey contains 10 questions.</p>
+            </header>
+
+            <div class="form-group">
+                <label for="q1">1. Which diet best describes your eating habits?</label>
+                <select id="q1" name="dietType" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="omnivore">Omnivore (I eat everything)</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="pescatarian">Pescatarian</option>
+                    <option value="keto">Keto / Low Carb</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>2. How often do you cook at home?</label>
+                <div class="options-wrapper">
+                    <label class="radio-option"><input type="radio" name="cookingFrequency" value="daily" required> Every day</label>
+                    <label class="radio-option"><input type="radio" name="cookingFrequency" value="few_times"> A few times a week</label>
+                    <label class="radio-option"><input type="radio" name="cookingFrequency" value="weekends"> Only on weekends</label>
+                    <label class="radio-option"><input type="radio" name="cookingFrequency" value="rarely"> Rarely / Never</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>3. What meals do you typically eat in a day? (Select all that apply)</label>
+                <div class="options-wrapper">
+                    <label class="checkbox-option"><input type="checkbox" name="meals[]" value="breakfast"> Breakfast</label>
+                    <label class="checkbox-option"><input type="checkbox" name="meals[]" value="lunch"> Lunch</label>
+                    <label class="checkbox-option"><input type="checkbox" name="meals[]" value="dinner"> Dinner</label>
+                    <label class="checkbox-option"><input type="checkbox" name="meals[]" value="snacks"> Snacks</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="q4">4. On average, how many glasses of water do you drink daily?</label>
+                <input type="number" id="q4" name="waterIntake" min="0" max="20" placeholder="e.g., 8" required>
+            </div>
+
+            <div class="form-group">
+                <label for="q5">5. How spicy do you like your food? <span class="range-value" id="spiceValue">Medium (5)</span></label>
+                <input type="range" id="q5" name="spiceLevel" min="1" max="10" value="5" oninput="updateRangeValue(this.value)">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666;">
+                    <span>Mild</span>
+                    <span>Extremely Hot</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>6. Do you regularly check nutritional labels before buying food?</label>
+                <div class="options-wrapper">
+                    <label class="radio-option"><input type="radio" name="checkLabels" value="yes" required> Yes</label>
+                    <label class="radio-option"><input type="radio" name="checkLabels" value="no"> No</label>
+                    <label class="radio-option"><input type="radio" name="checkLabels" value="sometimes"> Sometimes</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="q7">7. What is your primary motivation for your food choices?</label>
+                <select id="q7" name="motivation" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="taste">Taste & Pleasure</option>
+                    <option value="health">Health & Nutrition</option>
+                    <option value="convenience">Convenience & Time</option>
+                    <option value="price">Price / Budget</option>
+                    <option value="environment">Environmental Impact</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="q8">8. What is your favorite cuisine? (e.g., Italian, Thai, Mexican)</label>
+                <input type="text" id="q8" name="favCuisine" placeholder="Type your answer here..." required>
+            </div>
+
+            <div class="form-group">
+                <label>9. How often do you order food delivery or eat out?</label>
+                <div class="options-wrapper">
+                    <label class="radio-option"><input type="radio" name="eatingOut" value="0-1" required> 0-1 times a week</label>
+                    <label class="radio-option"><input type="radio" name="eatingOut" value="2-4"> 2-4 times a week</label>
+                    <label class="radio-option"><input type="radio" name="eatingOut" value="5+"> 5+ times a week</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="q10">10. Describe your ultimate comfort food meal.</label>
+                <textarea id="q10" name="comfortFood" rows="4" placeholder="Tell us about it..." required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Survey</button>
+        </form>
+    </div>
+
+    <script>
+        // Update range slider text
+        function updateRangeValue(val) {
+            document.getElementById('spiceValue').textContent = `Level ${val}`;
+        }
+
+        // Handle Form Submission
+        document.getElementById('foodSurveyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Gather form data
+            const formData = new FormData(this);
+            const data = {};
+            
+            // Log data to console (simulating backend submission)
+            console.log('--- Survey Submission ---');
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+                
+                // Handle multiple checkboxes (arrays)
+                if (data[key]) {
+                    if (!Array.isArray(data[key])) {
+                        data[key] = [data[key]];
+                    }
+                    data[key].push(value);
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            // Animation: Fade out form, Fade in Success message
+            this.style.opacity = '0';
+            this.style.transform = 'translateY(-20px)';
+            this.style.transition = 'all 0.5s ease';
+            
+            setTimeout(() => {
+                this.style.display = 'none';
+                const successMsg = document.getElementById('successMessage');
+                successMsg.style.display = 'block';
+                // Trigger reflow
+                void successMsg.offsetWidth; 
+                successMsg.style.opacity = '1';
+                successMsg.style.transform = 'translateY(0)';
+            }, 500);
+        });
+    </script>
+</body>
+</html>
